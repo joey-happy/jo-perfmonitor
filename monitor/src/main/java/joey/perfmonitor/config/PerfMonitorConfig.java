@@ -36,13 +36,14 @@ public class PerfMonitorConfig {
     public Advisor perfMonitorAdvisor() {
         AspectJExpressionPointcut pointcut = new AspectJExpressionPointcut();
 
+        String finalException = DEFAULT_AOP_PATTERN;
+
         String aopExpression = properties.getAopExpression();
         if (!StringUtils.isEmpty(aopExpression)) {
-            pointcut.setExpression(aopExpression);
-            return new DefaultPointcutAdvisor(pointcut, perfMonitorAdvice());
+            finalException = finalException + " || " + aopExpression;
         }
 
-        pointcut.setExpression(DEFAULT_AOP_PATTERN);
+        pointcut.setExpression(finalException);
         return new DefaultPointcutAdvisor(pointcut, perfMonitorAdvice());
     }
 }

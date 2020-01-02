@@ -27,6 +27,8 @@ public class PerfMonitorInterceptor implements MethodInterceptor, InitializingBe
 
     public PerfMonitorInterceptor(PerfMonitorProperties properties) {
         this.properties = properties;
+
+        log.info("PerfMonitor-stats init. props={}", properties);
     }
 
     /**
@@ -51,7 +53,7 @@ public class PerfMonitorInterceptor implements MethodInterceptor, InitializingBe
             if (cost >= minCost) {
                 Object[] arguments = invocation.getArguments();
                 StringBuilder sb = new StringBuilder();
-                sb.append("perfMonitor-stats ");
+                sb.append("PerfMonitor-stats ");
                 sb.append("class=[" + methodInfo.getClazzName() + "] ");
                 sb.append("method=[" + methodInfo.getMethodName() + "] ");
 

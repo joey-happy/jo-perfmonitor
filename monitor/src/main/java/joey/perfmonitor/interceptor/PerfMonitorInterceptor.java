@@ -58,7 +58,7 @@ public class PerfMonitorInterceptor implements MethodInterceptor, InitializingBe
                 sb.append("PerfMonitor-stats ");
                 sb.append("invokeTime=[" + formatTime(start)+ "&" + formatTime(end) + "] ");
                 sb.append("elapsedTime=[" + cost + "] ");
-                sb.append("expectedTime=[" + minCost + "]");
+                sb.append("expectedTime=[" + minCost + "] ");
 
                 sb.append("class=[" + methodInfo.getClazzName() + "] ");
                 sb.append("method=[" + methodInfo.getMethodName() + "] ");

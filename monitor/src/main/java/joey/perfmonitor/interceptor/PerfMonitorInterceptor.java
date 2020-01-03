@@ -12,6 +12,8 @@ import org.springframework.core.annotation.AnnotationUtils;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * 性能监控拦截器
@@ -48,15 +50,20 @@ public class PerfMonitorInterceptor implements MethodInterceptor, InitializingBe
             MethodInfo methodInfo = getMethodInfo(invocation);
 
             long minCost = getMinTimeCost(methodInfo);
-            long cost = System.currentTimeMillis() - start;
+            long end = System.currentTimeMillis();
+            long cost = end - start;
 
             if (cost >= minCost) {
-                Object[] arguments = invocation.getArguments();
                 StringBuilder sb = new StringBuilder();
                 sb.append("PerfMonitor-stats ");
+                sb.append("invokeTime=[" + formatTime(start)+ "&" + formatTime(end) + "] ");
+                sb.append("elapsedTime=[" + cost + "] ");
+                sb.append("expectedTime=[" + minCost + "]");
+
                 sb.append("class=[" + methodInfo.getClazzName() + "] ");
                 sb.append("method=[" + methodInfo.getMethodName() + "] ");
 
+                Object[] arguments = invocation.getArguments();
                 if (null != arguments && arguments.length >0) {
                     sb.append("args=[");
 
@@ -70,11 +77,14 @@ public class PerfMonitorInterceptor implements MethodInterceptor, InitializingBe
                     sb.append("] ");
                 }
 
-                sb.append("elapsedTime=[" + cost + "] ");
-                sb.append("expectedTime=[" + minCost + "]");
                 log.warn(sb.toString());
             }
         }
+    }
+
+    private static final String DATE_PATTERN = "yyyy-MM-dd HH:mm:ss.SSS";
+    private String formatTime(long millis) {
+        return new SimpleDateFormat(DATE_PATTERN).format(new Date(millis));
     }
 
     private long getMinTimeCost(MethodInfo methodInfo) {

@@ -21,8 +21,8 @@ public class PerfMonitorConfig {
     /**
      * 默认拦截带有注解ElapsedTime的方法和类
      */
-    private static final String DEFAULT_AOP_PATTERN = "@within(joey.perfmonitor.config.ElapsedTime) " +
-                                                   "|| @annotation(joey.perfmonitor.config.ElapsedTime)";
+    private static final String DEFAULT_AOP_PATTERN = "@within(" + ElapsedTime.class.getName() + ") " +
+            "|| @annotation(" + ElapsedTime.class.getName() + ")";
 
     @Autowired
     private PerfMonitorProperties properties;

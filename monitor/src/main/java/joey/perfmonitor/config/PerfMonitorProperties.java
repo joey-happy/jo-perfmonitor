@@ -21,7 +21,7 @@ public class PerfMonitorProperties {
     /**
      * 是否开启监控
      */
-    private boolean enabled = false;
+    private Boolean enabled = false;
 
     /**
      * 拦截aop匹配
@@ -31,5 +31,5 @@ public class PerfMonitorProperties {
     /**
      * 单位毫秒, 默认接口耗时超过1秒打印日志
      */
-    private long elapsedTime = 1000L;
+    private Long elapsedTime = 1000L;
 }
